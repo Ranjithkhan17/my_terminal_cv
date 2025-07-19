@@ -24,14 +24,14 @@
       overflow: hidden;
       border-right: 0.15em solid #00FF00;
       width: 0;
-      animation: typing 3s steps(20, end) forwards;
+      animation: typing 3.5s steps(35, end) forwards;
       margin-bottom: 20px;
       text-align: center;
     }
 
     @keyframes typing {
       from { width: 0 }
-      to { width: 16ch } /* Adjust length if name changes */
+      to { width: 35ch }
     }
 
     input {
@@ -50,7 +50,7 @@
 </head>
 <body>
   <div id="terminal">
-    <div class="typewriter">Ranjith Kumar-Devops Engineer</div>
+    <div class="typewriter">Ranjithkumar - DevOps Engineer</div>
     <p>> Welcome to my interactive resume! Type <code>help</code> to begin</p>
     <div id="output"></div>
     <input type="text" id="input" autocomplete="off" autofocus />
