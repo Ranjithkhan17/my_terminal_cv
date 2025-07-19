@@ -10,42 +10,28 @@
       font-family: monospace;
       padding: 20px;
     }
+
     #terminal {
       width: 100%;
       max-width: 800px;
       margin: auto;
     }
-   .glitch-name {
-  text-align: center;
-  font-size: 40px; /* Increased from 28px */
-  color: #00FF00;
-  position: relative;
-  animation: flicker 1.5s infinite alternate;
-  margin-bottom: 20px;
-}
 
-.glitch-name::after {
-  content: 'Ranjith Kumar';
-  position: absolute;
-  left: 2px;
-  text-shadow: -2px 0 red;
-  color: #00FF00;
-  animation: glitch-anim 1s infinite linear alternate-reverse;
-}
-
-    @keyframes flicker {
-      0% { opacity: 1; }
-      50% { opacity: 0.8; }
-      100% { opacity: 1; }
+    .typewriter {
+      font-size: 32px;
+      color: #00FF00;
+      white-space: nowrap;
+      overflow: hidden;
+      border-right: 0.15em solid #00FF00;
+      width: 0;
+      animation: typing 3s steps(20, end) forwards;
+      margin-bottom: 20px;
+      text-align: center;
     }
 
-    @keyframes glitch-anim {
-      0% { clip-path: inset(0 0 90% 0); }
-      20% { clip-path: inset(20% 0 60% 0); }
-      40% { clip-path: inset(60% 0 30% 0); }
-      60% { clip-path: inset(80% 0 10% 0); }
-      80% { clip-path: inset(30% 0 60% 0); }
-      100% { clip-path: inset(10% 0 80% 0); }
+    @keyframes typing {
+      from { width: 0 }
+      to { width: 16ch } /* Adjust length if name changes */
     }
 
     input {
@@ -60,37 +46,23 @@
     .output-line {
       white-space: pre-wrap;
     }
-
-    #cursor {
-      display: inline-block;
-      width: 10px;
-      height: 1em;
-      background-color: #00FF00;
-      animation: blink 1s infinite;
-      margin-left: 2px;
-    }
-
-    @keyframes blink {
-      0%, 50% { opacity: 1; }
-      50.01%, 100% { opacity: 0; }
-    }
   </style>
 </head>
 <body>
   <div id="terminal">
-    <div class="glitch-name">Ranjith Kumar</div>
-    <p>> Welcome to <strong>Ranjith's Resume</strong> | Type <code>help</code> to begin</p>
+    <div class="typewriter">Ranjith Kumar</div>
+    <p>> Welcome to my interactive resume! Type <code>help</code> to begin</p>
     <div id="output"></div>
     <input type="text" id="input" autocomplete="off" autofocus />
-    <div id="cursor"></div>
   </div>
 
-  <audio id="typeSound" src="https://www.soundjay.com/button/beep-07.wav" preload="auto"></audio>
+  <!-- Typing sound -->
+  <audio id="type-sound" src="https://www.fesliyanstudios.com/play-mp3/387" preload="auto"></audio>
 
   <script>
     const output = document.getElementById("output");
     const input = document.getElementById("input");
-    const typeSound = document.getElementById("typeSound");
+    const typeSound = document.getElementById("type-sound");
 
     const commands = {
       help: `Available commands:
@@ -113,11 +85,9 @@ I specialize in building infrastructure, automating workflows, and managing clou
 - Python (basic), Bash scripting
 - CI/CD & Automation
 - Tech content creator (RK TechLearning)`,
-
       experience: `Experience:
 - Automation Engineer @ MNC (4+ years DevOps)
 - 10 years total IT experience`,
-
       certifications: `Certifications:
 - AWS Cloud Practitioner
 - Microsoft Azure Administrator (AZ-104)
@@ -125,19 +95,16 @@ I specialize in building infrastructure, automating workflows, and managing clou
 - Google Cloud Digital Leader
 - Ansible for DevOps, Chef Automation
 - Red Hat Linux Administration`,
-
       contact: `Contact:
 Email   : ranjithkumar.khan@gmail.com
 GitHub  : https://github.com/Ranjithkhan17
 LinkedIn: https://www.linkedin.com/in/ranjith-kumar-cloudengineer/`,
-
       clear: () => { output.innerHTML = ""; }
     };
 
     input.addEventListener("keydown", (e) => {
       if (e.key === "Enter") {
         const command = input.value.trim();
-        if (command) typeSound.play().catch(() => {});
         output.innerHTML += `<p>> ${command}</p>`;
         const result = commands[command];
         if (typeof result === "function") {
@@ -149,6 +116,12 @@ LinkedIn: https://www.linkedin.com/in/ranjith-kumar-cloudengineer/`,
         }
         input.value = "";
         window.scrollTo(0, document.body.scrollHeight);
+      } else {
+        // play sound on typing
+        if (!typeSound.paused) {
+          typeSound.currentTime = 0;
+        }
+        typeSound.play();
       }
     });
   </script>
